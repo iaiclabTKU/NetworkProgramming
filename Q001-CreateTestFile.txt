@@ -1,0 +1,33 @@
+
+Use the code listed below to create a text file of specific size 
+to be used in testing TCP server/client programs. 
+
+Experiment 001:
+
+Try to modify tcp_server_client.js code to send a test file specified by
+file name from client to server.
+
+
+
+/* This code generates a text file of size specified by SizeLimit */
+/* ============================================================== */
+var fs = require('fs');
+var fd = fs.openSync("testfile1M.txt","w+");
+
+var NotDone = 1;
+var K = 1024;
+var M = K*K, cnt = 1, str = '1,';
+var SizeLimit = M;
+while (NotDone ) {
+  cnt++;
+  str += ','+cnt;
+  if(str.length >= SizeLimit) { NotDone = 0; }
+}
+
+  fs.writeSync(fd,str);
+  console.log("done");
+  fs.closeSync(fd);
+  
+/* ========================================================= */
+
+  
