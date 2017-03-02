@@ -1,0 +1,23 @@
+
+Use 'fs' module to read a text file into a variable. 
+The following example code demonstrates how to use openSync() and readSync() in 'fs' module 
+to open and read a text file. The content of the text file is read into a variable called 'buf'. 
+/* ================================================ */ 
+var fs = require('fs'); 
+var fd = fs.openSync("testfile1M.txt","r"); 
+var BufSize = 1024*1024; 
+const buf = new Buffer(BufSize); 
+fs.readSync(fd,buf,0,BufSize,0); 
+var len = buf.length; 
+fs.closeSync(fd); 
+console.log("Done reading text file, length=" + len); 
+/* ==================================================== */ 
+
+Q002: Please try to integrate this code into tcp_server_client.js 
+so that the resulting code will allow user entered a filename in tcp client and 
+send the content of the file to tcp server. 
+TCP server then saves the content it received from tcp client into a file called 'received.txt'. 
+Compare the two files filename and 'received.txt' to see if there is any differences between the two files. 
+
+Note: What if the content of the text file contains utf-8 encoded characters such as Chinese characters?
+
