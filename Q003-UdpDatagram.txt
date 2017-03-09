@@ -6,3 +6,14 @@ to send the message out to server.
 Q003: 
 (1). Please determine the maximal size of a single text message the client is able to send to server. 
 (2). How to send reliably a message larger than the maximal size determined in (1) from client to server?
+
+/* ================================ How to generate a string of prespecified length */
+var Alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+var len = Alphabet.length;
+var maxLength= 1024, largeStr="";
+var i;
+for (i=0; i<maxLength; i++) {
+  largeStr += Alphabet.charAt(i % len);
+}
+/* ================================= */
+
