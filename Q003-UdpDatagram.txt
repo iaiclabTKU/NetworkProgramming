@@ -1,0 +1,8 @@
+
+The udp server and client codes in udp_server_client.js use udp datagram to deliver a single message from client to server.
+The client code places the text message in a 'Buffer' and uses send() 
+to send the message out to server. 
+
+Q003: 
+(1). Please determine the maximal size of a single text message the client is able to send to server. 
+(2). How to send reliably a message larger than the maximal size determined in (1) from client to server?
