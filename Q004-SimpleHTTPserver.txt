@@ -1,0 +1,20 @@
+
+============================ a simple http server 
+var ip   = "127.0.0.1",
+    port = 5678,
+    http = require('http');
+var cnt=0;
+function onRequest(request, response) {
+     cnt++;
+     console.log("Request received. cnt="+cnt);
+     response.writeHead(200, {"Content-Type": "text/plain"});    
+     response.write("Hello World Hello World. This is my werbserver! CNT=" + cnt);
+     response.end();
+ }
+ http.createServer(onRequest).listen(port, ip);
+ console.log("My server has started.");
+
+=============================
+
+Q: Modify this http server to return a pre-specified html page. (test.html)
+Q: Modify this http server to indicate content encoding as utf-8. 
