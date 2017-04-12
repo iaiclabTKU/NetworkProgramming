@@ -1,0 +1,124 @@
+
+Three text files are used in this exercise: serv_app.js, users.json, and testpost.html
+The web client uses four different http methods as interface to access data in server.
+
+'GET': list all users from users.json file or list a single user when given a user id.
+'POST': add a user data to users.json file.
+'PUT': update a user's data in users.json file.
+'DELETE': deletes a user's data from users.json file. 
+
+Q001: Modify testpost.html so that it could be used to test 'PUT' method.
+Q002: Complete the 'DELETE' code in serv_app.js
+Q003: Complete the 'POST' and 'PUT' codes in serv_app.js
+
+// ===============================================
+// install express package
+// > npm install express 
+// =============== serv_app.js ====================
+
+var express = require('express');
+var app = express();
+var fs = require("fs");
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/listUsers', function (req, res) {
+   fs.readFile("./" + "users.json", 'utf8', function (err, data) {
+       console.log( data );
+       res.end( data );
+   });
+})
+
+app.get('/listUser/:uuid', function (req, res) {
+   // First read existing users.
+   fs.readFile( "./" + "users.json", 'utf8', function (err, data) {
+       users = JSON.parse( data );
+       var user = users["user" + req.params.uuid] 
+       console.log( user );
+       res.end( JSON.stringify(user));
+   });
+})
+
+app.post('/addUser', function (req, res) {
+     var uuid  = req.body.uuid;
+     var uname = req.body.uname;
+     var prof  = req.body.prof;
+     var passwd = req.body.passwd;
+     var str = 'Name: '+ uname +', PROF: '+prof+' UUID: '+uuid+' PASS: '+ passwd;
+     console.log( str );
+     res.end(str);
+     /* codes needed to add user data to users.json file */
+})
+
+app.put('/updateUser', function (req, res) {
+   var uuid  = req.body.uuid;
+     var uname = req.body.uname;
+     var prof  = req.body.prof;
+     var passwd = req.body.passwd;
+     var str = 'UPDATE: Name: '+ uname +', PROF: '+prof+' UUID: '+uuid+' PASS: '+ passwd;
+     console.log( str );
+     res.end(str);
+     /* codes needed to update user data in users.json file */
+})
+
+app.delete('/deleteUser/:id', function (req, res) {
+
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log("Example app listening at http://%s:%s", host, port)
+
+})
+
+// ==================================================================
+// =================== users.json
+{
+   "user1" : {
+      "name" : "makessh",
+	  "password" : "password1",
+	  "profession" : "teacher",
+	  "id": 1
+   },
+   "user2" : {
+      "name" : "suressh",
+	  "password" : "password2",
+	  "profession" : "librarian",
+	  "id": 2
+   },
+   "user3" : {
+      "name" : "runssh",
+	  "password" : "password3",
+	  "profession" : "clerk",
+	  "id": 3
+   },
+ "user1234" : {
+      "name" : "pythonssh",
+	  "password" : "password1234",
+	  "profession" : "student",
+	  "id": 1234
+   }
+}
+// =====================
+// ============= testpost.html ===============
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+</head>
+<body>
+<h1>POST form</h1>
+<form action='http://localhost:8081/addUser' method='post'>
+<input type='text' name='uuid' value='4321'>
+<input type='text' name='uname' value='fred'>
+<input type='text' name='prof' value='Programmer'>
+<input type='text' name='passwd' value='I am programmer'>
+<input type='submit' value='Submit'>
+</form>
+</body>
+</html>
+// ==========================================================
+
